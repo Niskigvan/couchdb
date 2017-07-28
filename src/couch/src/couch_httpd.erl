@@ -343,6 +343,7 @@ handle_request_int(MochiReq, DefaultFun,
             couch_log:error("~s", [ErrorReason]),
             send_error(HttpReq, {bad_otp_release, ErrorReason});
         exit:{body_too_large, _} ->
+            put(mochiweb_request_force_close, true),
             send_error(HttpReq, request_entity_too_large);
         exit:{uri_too_long, _} ->
             send_error(HttpReq, request_uri_too_long);

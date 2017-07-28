@@ -324,6 +324,7 @@ catch_error(HttpReq, exit, {mochiweb_recv_error, E}) ->
 catch_error(HttpReq, exit, {uri_too_long, _}) ->
     send_error(HttpReq, request_uri_too_long);
 catch_error(HttpReq, exit, {body_too_large, _}) ->
+    put(mochiweb_request_force_close, true),
     send_error(HttpReq, request_entity_too_large);
 catch_error(HttpReq, throw, Error) ->
     send_error(HttpReq, Error);

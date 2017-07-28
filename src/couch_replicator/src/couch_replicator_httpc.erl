@@ -162,7 +162,9 @@ process_response({ok, Code, Headers, Body}, Worker, HttpDb, Params, Callback) ->
         Json ->
             ?JSON_DECODE(Json)
         end,
-        Callback(Ok, Headers, EJson);
+        Ret = Callback(Ok, Headers, EJson),
+        maybe_stop_worker(Ok, Worker, HttpDb#httpdb.httpc_pool),
+        Ret;
     R when R =:= 301 ; R =:= 302 ; R =:= 303 ->
         backoff_success(HttpDb, Params),
         do_redirect(Worker, R, Headers, HttpDb, Params, Callback);
@@ -191,6 +193,7 @@ process_stream_response(ReqId, Worker, HttpDb, Params, Callback) ->
             ibrowse:stream_next(ReqId),
             try
                 Ret = Callback(Ok, Headers, StreamDataFun),
+                maybe_stop_worker(Ok, Worker, HttpDb#httpdb.httpc_pool),
                 Ret
             catch
                 throw:{maybe_retry_req, connection_closed} ->
@@ -219,6 +222,15 @@ process_stream_response(ReqId, Worker, HttpDb, Params, Callback) ->
         % and many open connections.
         maybe_retry(timeout, Worker, HttpDb, Params)
     end.
+
+
+% Some error responses like 413 might leave the worker socket connection in a
+% dirty state. To be safe make sure to stop that worker, wait for it to die
+% and return it to the pool.
+maybe_stop_worker(413, Worker, Pool) ->
+    stop_and_release_worker(Pool, Worker);
+maybe_stop_worker(_Code, _Worker, _Pool) ->
+    ok.
 
 
 % Only streaming HTTP requests send messages back from

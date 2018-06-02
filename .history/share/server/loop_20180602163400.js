@@ -110,16 +110,16 @@ var DDoc = (function() {
 
 var Loop = function() {
   var line, cmd, cmdkey, dispatch = {
-    "ddoc"          : DDoc.ddoc,
+    "ddoc"     : DDoc.ddoc,
     // "view"    : Views.handler,
-    "reset"         : State.reset,
-    "add_fun"       : State.addFun,
-    "add_lib"       : State.addLib,
-    "map_doc"       : Views.mapDoc,
-    "fts_index_doc" : Dreyfus.indexDoc,
-    "st_index_doc"  : Spatial.indexDoc,
-    "reduce"        : Views.reduce,
-    "rereduce"      : Views.rereduce
+    "reset"       : State.reset,
+    "add_fun"     : State.addFun,
+    "add_lib"     : State.addLib,
+    "map_doc"     : Views.mapDoc,
+    "fts_index_doc"     : Dreyfus.indexDoc,
+    "spt_index_doc" : Spatial.indexDoc,
+    "reduce"      : Views.reduce,
+    "rereduce"    : Views.rereduce
   };
   function handleError(e) {
     var type = e[0];

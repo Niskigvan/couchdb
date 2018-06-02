@@ -68,17 +68,6 @@ DepDescs = [
 
 ],
 
-DreyfusDep = [
-  {dreyfus, ".*", {git, "https://github.com/cloudant-labs/dreyfus", {branch, "master"}}}
-],
-
-HastingDep = [
-  {hastings, ".*", {git, "https://github.com/cloudant-labs/hastings", {branch, "master"}}}
-],
-
-EastonDep = [
-  {easton, ".*", {git, "https://github.com/cloudant-labs/easton", {branch, "master"}}}
-],
 
 BaseUrl = "https://github.com/apache/",
 
@@ -98,7 +87,7 @@ end,
 AddConfig = [
     {require_otp_vsn, "R16B03|R16B03-1|17|18|19|20"},
     {deps_dir, "src"},
-    {deps, lists:map(MakeDep, DepDescs) ++ DreyfusDep ++ HastingDep ++ EastonDep},
+    {deps, lists:map(MakeDep, DepDescs)},
     {sub_dirs, SubDirs},
     {lib_dirs, ["src"]},
     {erl_opts, [debug_info, {i, "../"}]},

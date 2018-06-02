@@ -27,7 +27,6 @@ main([]) ->
                "share/server/util.js",
                "share/server/validate.js",
                "share/server/views.js",
-               "share/server/spatial.js",
                "share/server/dreyfus.js",
                "share/server/loop.js"],
 
@@ -39,7 +38,6 @@ main([]) ->
                    "share/server/util.js",
                    "share/server/validate.js",
                    "share/server/views.js",
-                   "share/server/spatial.js",
                    "share/server/dreyfus.js"
                    "share/server/coffee-script.js",
                    "share/server/loop.js"],

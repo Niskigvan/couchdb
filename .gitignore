@@ -5,6 +5,8 @@
 .DS_Store
 .rebar/
 .eunit/
+.history
+.vscode
 log
 apache-couchdb-*/
 bin/
